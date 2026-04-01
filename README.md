@@ -8,9 +8,5 @@ To improve my Python programming skills by completing the daily exercises, proje
 ## Repository Structure
 Each folder contains the work for a specific day of the bootcamp.
 
-## Completed Days
-- Day 1: Working with Variables
-- Day 2: Understanding Data Types
-
 ## Notes
 This repository contains my own code solutions, exercises, and project work as I learn and improve.
