@@ -1,30 +1,42 @@
 import random
 from art import logo
-print(logo)
-print("Welcome to the Number Guessing Game!")
-print("I'm thinking of a number between 1 and 100.")
-difficulty = input("Choose a difficulty. Type 'easy' or 'hard':").lower()
-thought = random.randint(1, 100)
-if difficulty == "easy":
-    lives = 10
-elif difficulty == "hard":
-    lives = 5
 
-while lives > 0:
-    guess = int(input("Make a guess:\n "))
+EASY_LEVEL_LIVES = 10
+HARD_LEVEL_LIVES = 5
+
+def check_answer(guess, thought, lives):
+    """Checks answer against guess, returns the number of turns remaining"""
     if guess < thought:
-        lives -= 1
-        if lives > 0:
-            print(f"Too low.\n Guess again.\n You have {lives} attempts remaining to guess the number.")
-            continue
+        lives -= 1  # decrement first
+        print(f"Too low.\nGuess again.\nYou have {lives} attempts remaining.")
+        return lives
     elif guess > thought:
         lives -= 1
-        if lives > 0:
-            print(f"Too high.\n Guess again.\n You have {lives} attempts remaining to guess the number.")
-            continue
-    elif guess == thought:
-        print(f"Correct! You win!.")
-        break
-    if lives == 0 and guess != thought:
-        print(f"You lose. No lives left. The number was {thought}.")
-        break
+        print(f"Too high.\n Guess again.\n You have {lives} attempts remaining.")
+        return lives
+    else:  # guess == thought
+        print("Correct! You win!")
+        return lives
+
+def set_difficulty():
+    difficulty = input("Choose a difficulty. Type 'easy' or 'hard':").lower()
+    if difficulty == "easy":
+        return EASY_LEVEL_LIVES
+    elif difficulty == "hard":
+        return HARD_LEVEL_LIVES
+
+def game():
+    print(logo)
+    print("Welcome to the Number Guessing Game!")
+    print("I'm thinking of a number between 1 and 100.")
+    thought = random.randint(1, 100)
+    turns = set_difficulty()
+    guess = None
+    while guess != thought:
+        guess = int(input("Make a guess:\n "))
+        turns = check_answer(guess, thought, turns)
+        if turns == 0:
+            print(f"You've run out of guesses. The number was {thought}, you lose.")
+            return
+
+game()
